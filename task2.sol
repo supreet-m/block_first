@@ -8,14 +8,10 @@ contract sendEther{
     }
     mapping(address=>people) private usr;
     address[] private userAdrs;
-    event pay(
-        address indexed userAdrs, string name, string email
-    );
     function donateEther() external payable{
         require(msg.value>=0.01 ether, "Given value is less than 0.01 ether");
         people memory user = usr[msg.sender];
         user.userAddress = msg.sender;
-        emit pay(msg.sender, user.name,user.email);
     }
     function input_user(string memory name, string memory email) public{
         people storage user = usr[msg.sender];
@@ -25,7 +21,6 @@ contract sendEther{
             user.userAddress = msg.sender;
             userAdrs.push(msg.sender);
         }
-        emit pay(msg.sender, user.name, user.email );
     }
     function get_usr(address userAddress) public view returns (string memory name,string memory email){
         people storage user = usr[userAddress];
